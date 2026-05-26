@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈闯单证服务 | CO产地证·SASO·FTA·CE认证专业代办</title>
+<style>
+:root{
+  --blue:#1a3a5c;--blue2:#0d2644;--gold:#f0a500;--gold2:#ffc107;
+  --bg:#f2f4f7;--white:#fff;--g1:#f8f9fa;--g2:#e9ecef;--g3:#dee2e6;
+  --g5:#868e96;--g7:#495057;--g9:#212529;--green:#2ecc71;--red:#e74c3c;
+  --r:10px;--r2:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--g9);font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+
+/* ─── HEADER ─── */
+.hdr{
+  background:var(--blue2);color:#fff;
+  height:54px;display:flex;align-items:center;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+.hdr-in{
+  max-width:1400px;margin:0 auto;padding:0 24px;
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-ic{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--blue)}
+.logo h1{font-size:17px;font-weight:700;color:#fff}
+.logo p{font-size:10px;color:rgba(255,255,255,.6);line-height:1.2}
+
+.hdr-search{
+  flex:1;max-width:420px;position:relative;
+}
+.hdr-search input{
+  width:100%;padding:8px 16px 8px 38px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:20px;color:#fff;font-size:13px;outline:none;transition:.2s;
+}
+.hdr-search input::placeholder{color:rgba(255,255,255,.45)}
+.hdr-search input:focus{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4)}
+.hdr-search .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.5}
+
+.hdr-right{display:flex;align-items:center;gap:18px;flex-shrink:0}
+.hdr-tel{font-size:15px;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:6px}
+.hdr-tel span{font-size:12px;font-weight:400;color:rgba(255,255,255,.5)}
+.hdr-btn{
+  padding:7px 18px;background:var(--gold);color:var(--blue);
+  border-radius:20px;font-weight:700;font-size:13px;border:none;transition:.2s;
+  white-space:nowrap;
+}
+.hdr-btn:hover{background:var(--gold2);transform:scale(1.03)}
+
+/* ─── CATEGORY TABS ─── */
+.cat-bar{
+  background:#fff;border-bottom:1px solid var(--g2);
+  position:sticky;top:54px;z-index:190;
+  box-shadow:0 1px 6px rgba(0,0,0,.06);
+}
+.cat-in{
+  max-width:1400px;margin:0 auto;padding:0 24px;
+  display:flex;gap:4px;overflow-x:auto;
+  scrollbar-width:none;
+}
+.cat-in::-webkit-scrollbar{display:none}
+.cat-tab{
+  padding:12px 18px;font-size:13px;font-weight:500;color:var(--g5);
+  border:none;background:none;white-space:nowrap;position:relative;
+  transition:.2s;flex-shrink:0;
+}
+.cat-tab:hover{color:var(--g9)}
+.cat-tab.on{color:var(--blue);font-weight:700}
+.cat-tab.on::after{
+  content:'';position:absolute;bottom:0;left:16px;right:16px;
+  height:2.5px;background:var(--blue);border-radius:2px;
+}
+.cat-tab .cnt{
+  display:inline-block;background:var(--g2);color:var(--g5);
+  border-radius:10px;padding:1px 6px;font-size:10px;margin-left:4px;
+  font-weight:400;
+}
+.cat-tab.on .cnt{background:var(--blue);color:#fff}
+
+/* ─── MAIN ─── */
+.main{max-width:1400px;margin:0 auto;padding:24px 24px 48px}
+
+/* ─── GRID VIEW ─── */
+.grid-view{}
+.grid-meta{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+}
+.grid-meta h2{font-size:17px;font-weight:700;color:var(--g9)}
+.grid-meta span{font-size:12px;color:var(--g5)}
+
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.cert-card{
+  background:#fff;border-radius:var(--r2);
+  overflow:hidden;cursor:pointer;
+  border:2px solid transparent;
+  transition:all .22s;
+  display:flex;flex-direction:column;
+}
+.cert-card:hover{
+  border-color:var(--blue);
+  box-shadow:0 8px 28px rgba(26,58,92,.12);
+  transform:translateY(-2px);
+}
+.cert-card.active{border-color:var(--blue);box-shadow:0 8px 28px rgba(26,58,92,.15)}
+
+.cc-top{
+  padding:16px 16px 12px;
+  display:flex;align-items:flex-start;gap:10px;
+  border-bottom:1px solid var(--g2);
+}
+.cc-flag{font-size:28px;flex-shrink:0;line-height:1}
+.cc-head{flex:1;min-width:0}
+.cc-code{
+  display:inline-block;background:var(--blue);color:#fff;
+  font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;
+  letter-spacing:.3px;margin-bottom:4px;
+}
+.cc-name{font-size:13px;font-weight:700;color:var(--g9);line-height:1.3}
+.cc-badge{
+  float:right;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;margin-left:4px;flex-shrink:0;
+}
+.b-hot{background:#fff0f0;color:var(--red)}
+.b-pop{background:#fff8e0;color:#b8860b}
+.b-new{background:#e8f5e9;color:#2e7d32}
+
+.cc-mid{padding:10px 16px;flex:1}
+.cc-desc{font-size:12px;color:var(--g5);line-height:1.6}
+
+.cc-bot{
+  padding:10px 16px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cc-price{font-size:20px;font-weight:800;color:var(--blue)}
+.cc-price em{font-size:12px;font-weight:400;color:var(--g5);font-style:normal}
+.cc-time{font-size:11px;color:var(--g5);display:flex;align-items:center;gap:3px}
+.cc-btn{
+  padding:6px 14px;background:var(--gold);color:var(--blue);
+  border-radius:20px;font-size:12px;font-weight:700;border:none;transition:.2s;
+}
+.cc-btn:hover{background:var(--gold2)}
+
+/* ─── DETAIL VIEW (Apple style) ─── */
+.detail-view{display:none}
+.detail-view.show{display:block}
+.grid-view.hide{display:none}
+
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--blue);font-size:13px;font-weight:600;
+  border:none;background:none;margin-bottom:20px;padding:0;
+  transition:.15s;
+}
+.back-btn:hover{color:var(--blue2)}
+.back-btn::before{content:'‹';font-size:20px;line-height:1}
+
+.detail-wrap{
+  display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;
+}
+
+/* LEFT detail */
+.det-left{background:#fff;border-radius:var(--r2);overflow:hidden}
+
+.det-hero{
+  background:linear-gradient(135deg,var(--blue2),var(--blue));
+  padding:32px 36px;color:#fff;display:flex;align-items:center;gap:20px;
+}
+.det-hero-flag{font-size:56px;line-height:1}
+.det-hero-text{}
+.det-hero-code{
+  display:inline-block;background:var(--gold);color:var(--blue);
+  font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px;
+  margin-bottom:8px;
+}
+.det-hero-title{font-size:26px;font-weight:800;line-height:1.2;margin-bottom:4px}
+.det-hero-sub{font-size:13px;color:rgba(255,255,255,.65)}
+
+.det-body{padding:32px 36px}
+
+.det-section{margin-bottom:28px}
+.det-section:last-child{margin-bottom:0}
+.det-label{
+  font-size:11px;font-weight:700;color:var(--g5);
+  text-transform:uppercase;letter-spacing:.8px;
+  margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.det-label::before{content:'';width:3px;height:14px;background:var(--blue);border-radius:2px;display:inline-block}
+
+.det-when{
+  background:linear-gradient(135deg,#f0f7ff,#e8f4fd);
+  border:1px solid #c5dff5;border-radius:var(--r);
+  padding:16px 20px;
+}
+.det-when p{font-size:14px;color:#1a3a5c;line-height:1.75;font-weight:500}
+
+.det-desc{font-size:13px;color:var(--g7);line-height:1.8}
+
+.det-docs{display:flex;flex-direction:column;gap:8px}
+.det-doc{
+  display:flex;align-items:center;gap:10px;
+  background:var(--g1);border-radius:8px;padding:10px 14px;
+}
+.det-doc-icon{font-size:16px;flex-shrink:0}
+.det-doc-name{font-size:13px;color:var(--g7);flex:1}
+
+.det-sample{
+  background:var(--g1);border:2px dashed var(--g3);
+  border-radius:var(--r);padding:28px;text-align:center;
+}
+.det-sample-icon{font-size:48px;margin-bottom:8px}
+.det-sample-label{font-size:13px;color:var(--g7);font-weight:600;margin-bottom:4px}
+.det-sample-note{font-size:11px;color:var(--g5)}
+
+.det-dl-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.det-dl-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border:1.5px solid var(--blue);
+  border-radius:20px;font-size:12px;color:var(--blue);font-weight:600;
+  background:#fff;transition:.2s;
+}
+.det-dl-btn:hover{background:var(--blue);color:#fff}
+
+/* RIGHT order panel */
+.det-right{position:sticky;top:120px}
+
+.order-card{background:#fff;border-radius:var(--r2);overflow:hidden}
+
+.oc-top{padding:24px}
+.oc-price-label{font-size:11px;color:var(--g5);margin-bottom:4px}
+.oc-price{font-size:40px;font-weight:900;color:var(--blue);line-height:1}
+.oc-price sup{font-size:18px}
+.oc-price-note{font-size:12px;color:var(--g5);margin-top:4px}
+
+.oc-info{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--g2);border-radius:var(--r);overflow:hidden;
+  margin:16px 0;
+}
+.oc-info-item{
+  background:#fff;padding:12px 14px;
+}
+.oc-info-item .lbl{font-size:10px;color:var(--g5);margin-bottom:3px}
+.oc-info-item .val{font-size:13px;font-weight:700;color:var(--g9)}
+
+.oc-divider{height:1px;background:var(--g2);margin:0 24px}
+
+.oc-form{padding:16px 24px 24px}
+
+.oc-input{
+  width:100%;padding:10px 14px;border:1.5px solid var(--g2);
+  border-radius:8px;font-size:13px;outline:none;transition:.2s;
+  font-family:inherit;margin-bottom:10px;
+}
+.oc-input:focus{border-color:var(--blue)}
+.oc-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+.oc-main-btn{
+  display:block;width:100%;padding:14px;
+  background:var(--gold);color:var(--blue);border:none;
+  border-radius:10px;font-weight:800;font-size:16px;
+  text-align:center;transition:.2s;margin-bottom:10px;
+}
+.oc-main-btn:hover{background:var(--gold2);transform:scale(1.01)}
+
+.oc-wc-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;background:#07C160;color:#fff;
+  border:none;border-radius:10px;font-weight:700;font-size:14px;transition:.2s;
+}
+.oc-wc-btn:hover{background:#06a354}
+
+.oc-guarantee{
+  padding:16px 24px;border-top:1px solid var(--g2);
+  display:flex;flex-direction:column;gap:6px;
+}
+.oc-g-item{
+  font-size:12px;color:var(--g7);display:flex;align-items:center;gap:6px;
+}
+.oc-g-item::before{content:'✓';color:var(--green);font-weight:700;font-size:13px}
+
+/* ─── QUICK ORDER MODAL ─── */
+.qov{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.55);z-index:300;
+  backdrop-filter:blur(6px);
+  align-items:flex-end;justify-content:center;
+}
+.qov.show{display:flex}
+.qmodal{
+  background:#fff;border-radius:20px 20px 0 0;
+  width:100%;max-width:520px;
+  padding-bottom:env(safe-area-inset-bottom);
+  animation:slideup .25s ease;
+}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.qm-h{
+  background:var(--blue);color:#fff;padding:18px 24px;
+  border-radius:20px 20px 0 0;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.qm-h h3{font-size:16px;font-weight:700}
+.qm-close{background:none;border:none;color:#fff;font-size:24px;line-height:1;opacity:.7}
+.qm-close:hover{opacity:1}
+.qm-b{padding:20px 24px 24px}
+.qm-type{
+  background:var(--g1);border-radius:8px;padding:10px 14px;
+  font-size:13px;font-weight:600;color:var(--blue);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.fgrp{margin-bottom:12px}
+.fgrp label{display:block;font-size:11px;font-weight:600;color:var(--g5);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.fgrp input,.fgrp select,.fgrp textarea{
+  width:100%;padding:10px 13px;border:1.5px solid var(--g2);
+  border-radius:8px;font-size:13px;outline:none;transition:.2s;font-family:inherit;
+}
+.fgrp input:focus,.fgrp select:focus{border-color:var(--blue)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fsub{
+  width:100%;padding:13px;background:var(--gold);color:var(--blue);
+  border:none;border-radius:10px;font-weight:800;font-size:15px;margin-top:4px;transition:.2s;
+}
+.fsub:hover{background:var(--gold2)}
+.fnote{font-size:11px;color:var(--g5);text-align:center;margin-top:8px}
+
+/* ─── FOOTER ─── */
+.foot{background:var(--blue2);color:rgba(255,255,255,.7);padding:40px 24px 24px}
+.foot-in{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-bottom:32px}
+.fb h4{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px}
+.fb p,.fb li{font-size:12px;line-height:1.9}
+.fb ul{list-style:none}
+.fb li::before{content:'› ';color:var(--gold)}
+.foot-copy{text-align:center;font-size:11px;border-top:1px solid rgba(255,255,255,.1);padding-top:18px}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){.cert-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){
+  .cert-grid{grid-template-columns:repeat(2,1fr)}
+  .detail-wrap{grid-template-columns:1fr}
+  .det-right{position:static}
+  .hdr-search{display:none}
+  .foot-in{grid-template-columns:1fr 1fr}
+}
+@media(max-width:500px){.cert-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="logo">
+      <div class="logo-ic">📋</div>
+      <div>
+        <h1>陈闯单证服务</h1>
+        <p>产地证 · CO · SASO · FTA · 认证</p>
+      </div>
+    </div>
+    <div class="hdr-search">
+      <span class="si">🔍</span>
+      <input id="searchInput" placeholder="搜索单证，如「韩国」「SASO」「CE认证」..." oninput="doSearch(this.value)">
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-tel">📞 13424240034 <span>微信同号</span></div>
+      <button class="hdr-btn" onclick="openQ(null)">立即下单 →</button>
+    </div>
+  </div>
+</header>
+
+<!-- ─── CATEGORY TABS ─── -->
+<div class="cat-bar">
+  <div class="cat-in" id="catBar">
+    <button class="cat-tab on" onclick="filterCat('all',this)">全部 <span class="cnt">33</span></button>
+    <button class="cat-tab" onclick="filterCat('co',this)">原产地证 CO <span class="cnt">14</span></button>
+    <button class="cat-tab" onclick="filterCat('ccpit',this)">商事证明书 <span class="cnt">5</span></button>
+    <button class="cat-tab" onclick="filterCat('consular',this)">领事认证 <span class="cnt">2</span></button>
+    <button class="cat-tab" onclick="filterCat('apostille',this)">海牙认证 <span class="cnt">1</span></button>
+    <button class="cat-tab" onclick="filterCat('cert',this)">产品认证 <span class="cnt">7</span></button>
+    <button class="cat-tab" onclick="filterCat('special',this)">特殊报告/许可 <span class="cnt">3</span></button>
+    <button class="cat-tab" onclick="filterCat('mideast',this)">🌍 中东</button>
+    <button class="cat-tab" onclick="filterCat('asia',this)">🌏 亚洲</button>
+    <button class="cat-tab" onclick="filterCat('latam',this)">🌎 拉美</button>
+    <button class="cat-tab" onclick="filterCat('europe',this)">🇪🇺 欧洲</button>
+    <button class="cat-tab" onclick="filterCat('africa',this)">🌍 非洲</button>
+    <button class="cat-tab" onclick="filterCat('pacific',this)">🌊 大洋洲</button>
+  </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+  <!-- GRID VIEW -->
+  <div class="grid-view" id="gridView">
+    <div class="grid-meta">
+      <h2 id="gridTitle">全部单证（33种）</h2>
+      <span id="gridSub">点击任意单证查看详情和下单</span>
+    </div>
+    <div class="cert-grid" id="certGrid">
+
+<!-- ①CO -->
+<div class="cert-card" onclick="showDetail('co')" data-type="co" data-region="all">
+  <div class="cc-top"><span class="cc-flag">🌐</span><div class="cc-head"><span class="cc-code">CO</span><span class="cc-badge b-hot">🔥最热</span><div class="cc-name">一般原产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">证明货物原产于中国，全球通用，享最惠国关税。几乎所有出口贸易都会用到的基础单证。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('CO 一般原产地证')">下单 →</button></div>
+</div>
+
+<!-- ②FE -->
+<div class="cert-card" onclick="showDetail('fe')" data-type="co" data-region="asia">
+  <div class="cc-top"><span class="cc-flag">🌏</span><div class="cc-head"><span class="cc-code">FE</span><span class="cc-badge b-pop">⭐热门</span><div class="cc-name">东盟产地证 Form E</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口越南、泰国、马来西亚、印尼等东南亚10国专用，享中国-东盟FTA零关税优惠。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FE 东盟产地证')">下单 →</button></div>
+</div>
+
+<!-- ③FK -->
+<div class="cert-card" onclick="showDetail('fk')" data-type="co" data-region="asia">
+  <div class="cc-top"><span class="cc-flag">🇰🇷</span><div class="cc-head"><span class="cc-code">FK</span><span class="cc-badge b-pop">⭐热门</span><div class="cc-name">中韩FTA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口韩国专用，中韩FTA 2015年生效，凭此证韩国进口大量商品已降至零关税，省去客户大笔关税。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FK 中韩FTA产地证')">下单 →</button></div>
+</div>
+
+<!-- ④FF -->
+<div class="cert-card" onclick="showDetail('ff')" data-type="co" data-region="latam">
+  <div class="cc-top"><span class="cc-flag">🇨🇱</span><div class="cc-head"><span class="cc-code">FF</span><span class="cc-badge b-pop">⭐热门</span><div class="cc-name">中智FTA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口智利专用，绝大多数商品已实现零关税。中国在拉美签订的第一个FTA，出口智利必备。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FF 中智FTA产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑤AU -->
+<div class="cert-card" onclick="showDetail('au')" data-type="co" data-region="pacific">
+  <div class="cc-top"><span class="cc-flag">🇦🇺</span><div class="cc-head"><span class="cc-code">AU</span><span class="cc-badge b-pop">⭐热门</span><div class="cc-name">中澳FTA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口澳大利亚专用（CHAFTA），绝大多数工业品已零关税，帮买家大幅节省进口成本。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('AU 中澳FTA产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑥RCEP -->
+<div class="cert-card" onclick="showDetail('rcep')" data-type="co" data-region="asia">
+  <div class="cc-top"><span class="cc-flag">🌏</span><div class="cc-head"><span class="cc-code">RCEP</span><span class="cc-badge b-new">🆕2022</span><div class="cc-name">RCEP产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">全球最大自贸协定，覆盖日本、韩、澳、新西兰+东盟15国。出口日本首次可享FTA优惠关税。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('RCEP产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑦FB -->
+<div class="cert-card" onclick="showDetail('fb')" data-type="co" data-region="asia">
+  <div class="cc-top"><span class="cc-flag">🌏</span><div class="cc-head"><span class="cc-code">FB</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">亚太贸易协定产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口印度、孟加拉国、斯里兰卡、老挝等5国，比普通CO关税更低，出口印度尤为实用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FB 亚太产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑧FP -->
+<div class="cert-card" onclick="showDetail('fp')" data-type="co" data-region="asia">
+  <div class="cc-top"><span class="cc-flag">🇵🇰</span><div class="cc-head"><span class="cc-code">FP</span><span class="cc-badge b-new">🆕</span><div class="cc-name">中巴FTA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口巴基斯坦专用。中巴FTA已全面实施，大多数商品享受零关税或低关税优惠。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FP 中巴FTA产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑨FR -->
+<div class="cert-card" onclick="showDetail('fr')" data-type="co" data-region="latam">
+  <div class="cc-top"><span class="cc-flag">🇵🇪</span><div class="cc-head"><span class="cc-code">FR</span><span class="cc-badge b-new">🆕</span><div class="cc-name">中秘FTA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口秘鲁专用，中秘FTA 2010年生效，大量商品享受关税优惠，开拓拉美市场必备。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FR 中秘FTA产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑩FN -->
+<div class="cert-card" onclick="showDetail('fn')" data-type="co" data-region="pacific">
+  <div class="cc-top"><span class="cc-flag">🇳🇿</span><div class="cc-head"><span class="cc-code">FN</span><span class="cc-badge b-new">🆕</span><div class="cc-name">中新西兰FTA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口新西兰，中国与发达国家签订的首个FTA。也可与RCEP对比选更低税率的证书使用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FN 中新西兰FTA产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑪FS -->
+<div class="cert-card" onclick="showDetail('fs')" data-type="co" data-region="europe">
+  <div class="cc-top"><span class="cc-flag">🇨🇭</span><div class="cc-head"><span class="cc-code">FS</span><span class="cc-badge b-new">🆕</span><div class="cc-name">中瑞FTA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口瑞士专用，中国与欧洲大陆首个FTA，化工品、机械、手表配件行业出口瑞士常用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FS 中瑞FTA产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑫FA -->
+<div class="cert-card" onclick="showDetail('fa')" data-type="co" data-region="europe">
+  <div class="cc-top"><span class="cc-flag">📄</span><div class="cc-head"><span class="cc-code">FA</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">普惠制产地证 Form A</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">GSP普遍优惠制产地证，适用挪威等保留GSP资格的国家，享受单方面关税优惠。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FA 普惠制产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑬FH -->
+<div class="cert-card" onclick="showDetail('fh')" data-type="co" data-region="asia">
+  <div class="cc-top"><span class="cc-flag">🏝️</span><div class="cc-head"><span class="cc-code">FH</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">海峡两岸ECFA产地证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口台湾地区，ECFA早期收获清单内的商品可享受降税甚至零关税，买家在台湾时适用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FH 海峡两岸产地证')">下单 →</button></div>
+</div>
+
+<!-- ⑭未再加工 -->
+<div class="cert-card" onclick="showDetail('unmanuf')" data-type="co" data-region="all">
+  <div class="cc-top"><span class="cc-flag">🔖</span><div class="cc-head"><span class="cc-code">未再加工</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">未再加工证明</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">货物经香港等第三地中转时，进口国要求证明货物在中转地未经加工，仍保持中国原产地。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 2个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('未再加工证明')">下单 →</button></div>
+</div>
+
+<!-- ⑮SASO -->
+<div class="cert-card" onclick="showDetail('saso')" data-type="ccpit" data-region="mideast">
+  <div class="cc-top"><span class="cc-flag">🇸🇦</span><div class="cc-head"><span class="cc-code">SASO</span><span class="cc-badge b-hot">🔥必备</span><div class="cc-name">沙特符合性证明</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口沙特阿拉伯强制要求。受控产品缺少SASO（PCoC+SC两证）直接被沙特海关拒绝入境。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 3-7个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('SASO 沙特符合性证明')">下单 →</button></div>
+</div>
+
+<!-- ⑯CCVO -->
+<div class="cert-card" onclick="showDetail('ccvo')" data-type="ccpit" data-region="africa">
+  <div class="cc-top"><span class="cc-flag">🇳🇬</span><div class="cc-head"><span class="cc-code">CCVO</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">尼日利亚联合证书</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口尼日利亚强制要求，贸促会认证商业发票，证明货物价值和原产地，缺少则无法通关。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 2个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('CCVO 尼日利亚联合证书')">下单 →</button></div>
+</div>
+
+<!-- ⑰CFS -->
+<div class="cert-card" onclick="showDetail('cfs')" data-type="ccpit" data-region="all">
+  <div class="cc-top"><span class="cc-flag">📜</span><div class="cc-head"><span class="cc-code">CFS</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">自由销售证书</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">证明产品在中国已合法销售，出口食品、化妆品、医疗器械、保健品到中东、非洲、东南亚时进口商通常要求提供。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 3-5个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('CFS 自由销售证书')">下单 →</button></div>
+</div>
+
+<!-- ⑱发票认证 -->
+<div class="cert-card" onclick="showDetail('invoice')" data-type="ccpit" data-region="all">
+  <div class="cc-top"><span class="cc-flag">🧾</span><div class="cc-head"><span class="cc-code">发票认证</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">贸促会发票证明书</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">贸促会对商业发票盖章认证，证明发票真实性。中东、非洲、南美信用证常见要求，中东客户尤为普遍。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 1个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('贸促会发票证明书')">下单 →</button></div>
+</div>
+
+<!-- ⑲阿尔及利亚 -->
+<div class="cert-card" onclick="showDetail('algeria')" data-type="ccpit" data-region="africa">
+  <div class="cc-top"><span class="cc-flag">🇩🇿</span><div class="cc-head"><span class="cc-code">阿尔及利亚</span><span class="cc-badge b-new">🆕</span><div class="cc-name">阿尔及利亚自由贸易证书</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口阿尔及利亚的食品、化妆品、化工品等受控产品，进口方要求提供在原产国可自由销售的证明。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 3个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('阿尔及利亚自由贸易证书')">下单 →</button></div>
+</div>
+
+<!-- ⑳海牙 -->
+<div class="cert-card" onclick="showDetail('apostille')" data-type="apostille" data-region="all">
+  <div class="cc-top"><span class="cc-flag">⚖️</span><div class="cc-head"><span class="cc-code">Apostille</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">海牙认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">120+国家互认，免使馆认证。商业合同、授权书、公证文书需在海牙公约成员国使用时适用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 5-10个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('海牙认证 Apostille')">下单 →</button></div>
+</div>
+
+<!-- ㉑埃及 -->
+<div class="cert-card" onclick="showDetail('egypt')" data-type="consular" data-region="mideast">
+  <div class="cc-top"><span class="cc-flag">🇪🇬</span><div class="cc-head"><span class="cc-code">埃及</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">埃及使馆认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口埃及的发票、箱单、产地证等必须经埃及大使馆认证加签，缺少则无法在埃及通关清关。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 5-7个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('埃及使馆认证')">下单 →</button></div>
+</div>
+
+<!-- ㉒阿曼 -->
+<div class="cert-card" onclick="showDetail('oman')" data-type="consular" data-region="mideast">
+  <div class="cc-top"><span class="cc-flag">🇴🇲</span><div class="cc-head"><span class="cc-code">阿曼</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">阿曼大使馆认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口阿曼的商业单据（发票/产地证/箱单等）须经阿曼大使馆认证，是阿曼海关的清关要求。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份</em></div><div class="cc-time">⏱ 5-7个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('阿曼大使馆认证')">下单 →</button></div>
+</div>
+
+<!-- ㉓CE -->
+<div class="cert-card" onclick="showDetail('ce')" data-type="cert" data-region="europe">
+  <div class="cc-top"><span class="cc-flag">🇪🇺</span><div class="cc-head"><span class="cc-code">CE</span><span class="cc-badge b-hot">🔥必备</span><div class="cc-name">CE认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口欧盟27国强制要求，电子电器、机械、玩具等产品必须加贴CE标志方可在欧洲市场销售。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 15-30个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('CE认证')">下单 →</button></div>
+</div>
+
+<!-- ㉔ROHS -->
+<div class="cert-card" onclick="showDetail('rohs')" data-type="cert" data-region="europe">
+  <div class="cc-top"><span class="cc-flag">🇪🇺</span><div class="cc-head"><span class="cc-code">RoHS</span><span class="cc-badge b-hot">🔥必备</span><div class="cc-name">ROHS认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">欧盟有害物质限制指令，出口欧盟电子产品必须符合，限制铅汞镉等6种有害物质，通常与CE同步办理。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 10-20个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('ROHS认证')">下单 →</button></div>
+</div>
+
+<!-- ㉕FCC -->
+<div class="cert-card" onclick="showDetail('fcc')" data-type="cert" data-region="all">
+  <div class="cc-top"><span class="cc-flag">🇺🇸</span><div class="cc-head"><span class="cc-code">FCC</span><span class="cc-badge b-pop">⭐热门</span><div class="cc-name">FCC认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口美国含无线功能产品必须取得FCC认证。蓝牙耳机、WiFi路由器、充电器、手机等均适用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 15-25个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('FCC认证')">下单 →</button></div>
+</div>
+
+<!-- ㉖UKCA -->
+<div class="cert-card" onclick="showDetail('ukca')" data-type="cert" data-region="europe">
+  <div class="cc-top"><span class="cc-flag">🇬🇧</span><div class="cc-head"><span class="cc-code">UKCA</span><span class="cc-badge b-new">🆕英国</span><div class="cc-name">UKCA认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">英国脱欧后替代CE的英国专用认证，出口英国必须单独申请，CE标志已不被英国接受。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 15-30个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('UKCA认证')">下单 →</button></div>
+</div>
+
+<!-- ㉗PSE -->
+<div class="cert-card" onclick="showDetail('pse')" data-type="cert" data-region="asia">
+  <div class="cc-top"><span class="cc-flag">🇯🇵</span><div class="cc-head"><span class="cc-code">PSE</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">PSE认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">日本电气用品安全法认证，出口日本的电气产品强制要求，充电器、电源适配器、电动工具等适用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 20-40个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('PSE认证')">下单 →</button></div>
+</div>
+
+<!-- ㉘UL -->
+<div class="cert-card" onclick="showDetail('ul')" data-type="cert" data-region="all">
+  <div class="cc-top"><span class="cc-flag">🇺🇸</span><div class="cc-head"><span class="cc-code">UL</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">UL认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">美国保险商实验室认证，亚马逊、沃尔玛等大型零售商普遍要求，插头线缆充电设备常用。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 20-45个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('UL认证')">下单 →</button></div>
+</div>
+
+<!-- ㉙CB -->
+<div class="cert-card" onclick="showDetail('cb')" data-type="cert" data-region="all">
+  <div class="cc-top"><span class="cc-flag">🌐</span><div class="cc-head"><span class="cc-code">CB</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">CB认证</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">IEC国际互认体系，一张CB证书可在50+国家互换本地认证，节省多国重复认证的费用和时间。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 20-40个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('CB认证')">下单 →</button></div>
+</div>
+
+<!-- ㉚DGM -->
+<div class="cert-card" onclick="showDetail('dgm')" data-type="special" data-region="all">
+  <div class="cc-top"><span class="cc-flag">⚠️</span><div class="cc-head"><span class="cc-code">DGM</span><span class="cc-badge b-hot">⚠️必备</span><div class="cc-name">危险品申报/鉴定报告</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">锂电池、化学品、粉末等危险品运输前必须完成危险品鉴定，航空按IATA、海运按IMDG，缺少则拒绝收货。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 3-5个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('DGM危险品鉴定报告')">下单 →</button></div>
+</div>
+
+<!-- ㉛出口许可证 -->
+<div class="cert-card" onclick="showDetail('exportlicense')" data-type="special" data-region="all">
+  <div class="cc-top"><span class="cc-flag">📃</span><div class="cc-head"><span class="cc-code">出口许可</span><span class="cc-badge b-pop">⭐</span><div class="cc-name">出口许可证代办</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">二手车出口、两用物项等商品报关时海关强制要求，没有出口许可证不予放行，需提前30-60天申请。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 5-15个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('出口许可证代办')">下单 →</button></div>
+</div>
+
+<!-- ㉜二手车 -->
+<div class="cert-card" onclick="showDetail('usedcar')" data-type="special" data-region="all">
+  <div class="cc-top"><span class="cc-flag">🚗</span><div class="cc-head"><span class="cc-code">车辆出口</span><span class="cc-badge b-new">🆕</span><div class="cc-name">二手车出口单证全套</div></div></div>
+  <div class="cc-mid"><p class="cc-desc">出口许可证+检测报告+自我声明+CO产地证全套代办，协助车商和货代顺利完成二手车出口报关。</p></div>
+  <div class="cc-bot"><div><div class="cc-price">¥90<em>/份起</em></div><div class="cc-time">⏱ 5-10个工作日</div></div><button class="cc-btn" onclick="event.stopPropagation();openQ('二手车出口单证全套代办')">下单 →</button></div>
+</div>
+
+    </div><!-- /cert-grid -->
+  </div><!-- /grid-view -->
+
+  <!-- ─── DETAIL VIEW ─── -->
+  <div class="detail-view" id="detailView">
+    <button class="back-btn" onclick="goBack()">返回单证列表</button>
+    <div class="detail-wrap">
+      <!-- LEFT -->
+      <div class="det-left">
+        <div class="det-hero">
+          <div class="det-hero-flag" id="dFlag"></div>
+          <div class="det-hero-text">
+            <div class="det-hero-code" id="dCode"></div>
+            <div class="det-hero-title" id="dTitle"></div>
+            <div class="det-hero-sub" id="dSub"></div>
+          </div>
+        </div>
+        <div class="det-body">
+          <div class="det-section">
+            <div class="det-label">什么情况下需要办？</div>
+            <div class="det-when"><p id="dWhen"></p></div>
+          </div>
+          <div class="det-section">
+            <div class="det-label">详细说明</div>
+            <p class="det-desc" id="dDesc"></p>
+          </div>
+          <div class="det-section">
+            <div class="det-label">所需资料清单</div>
+            <div class="det-docs" id="dDocs"></div>
+          </div>
+          <div class="det-section">
+            <div class="det-label">下载模板 / 样本</div>
+            <div class="det-sample">
+              <div class="det-sample-icon">📋</div>
+              <div class="det-sample-label" id="dSampleLabel"></div>
+              <div class="det-sample-note">成品样本展示 · 实际办理后由顺丰寄出正本</div>
+            </div>
+            <div class="det-dl-row">
+              <button class="det-dl-btn" onclick="dlFile('草稿模板Word')">📄 草稿填写模板</button>
+              <button class="det-dl-btn" onclick="dlFile('成品样本PDF')">🖼️ 成品样本PDF</button>
+              <button class="det-dl-btn" onclick="dlFile('资料清单')">📋 资料清单</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT -->
+      <div class="det-right">
+        <div class="order-card">
+          <div class="oc-top">
+            <div class="oc-price-label">服务价格</div>
+            <div class="oc-price"><sup>¥</sup><span id="dPrice">90</span></div>
+            <div class="oc-price-note">/ 每份 · 多份可议价</div>
+            <div class="oc-info">
+              <div class="oc-info-item"><div class="lbl">⏱ 出证时效</div><div class="val" id="dTime"></div></div>
+              <div class="oc-info-item"><div class="lbl">📦 快递</div><div class="val">顺丰次日达</div></div>
+              <div class="oc-info-item"><div class="lbl">✅ 出证机构</div><div class="val" id="dIssuer"></div></div>
+              <div class="oc-info-item"><div class="lbl">📞 联系人</div><div class="val">陈闯</div></div>
+            </div>
+          </div>
+          <div class="oc-divider"></div>
+          <div class="oc-form">
+            <div class="oc-row">
+              <input class="oc-input" placeholder="您的姓名 *" id="ocName">
+              <input class="oc-input" placeholder="手机/微信 *" id="ocTel">
+            </div>
+            <input class="oc-input" placeholder="货物品名（如：电子产品）" id="ocGoods">
+            <input class="oc-input" placeholder="备注（份数/特殊要求）" id="ocNote">
+            <button class="oc-main-btn" onclick="submitDet()">🚀 立即下单</button>
+            <button class="oc-wc-btn" onclick="alert('微信号：13424240034\n请添加陈闯微信，发资料即可出单！')">💬 微信咨询 13424240034</button>
+          </div>
+          <div class="oc-guarantee">
+            <div class="oc-g-item">出证有问题包重新办理</div>
+            <div class="oc-g-item">微信实时通知进度</div>
+            <div class="oc-g-item">资料严格保密传输</div>
+            <div class="oc-g-item">急单当天优先处理</div>
+            <div class="oc-g-item">7×24小时随时响应</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ─── QUICK ORDER MODAL ─── -->
+<div class="qov" id="qov" onclick="closeQOv(event)">
+  <div class="qmodal">
+    <div class="qm-h"><h3>📋 在线下单 · 免费报价</h3><button class="qm-close" onclick="closeQ()">✕</button></div>
+    <div class="qm-b">
+      <div class="qm-type" id="qType">🌐 请选择单证类型</div>
+      <div class="fgrp">
+        <label>单证类型</label>
+        <select id="qSelect">
+          <option value="">请选择</option>
+          <option>CO 一般原产地证</option><option>FE 东盟产地证</option>
+          <option>FK 中韩FTA产地证</option><option>FF 中智FTA产地证</option>
+          <option>AU 中澳FTA产地证</option><option>RCEP产地证</option>
+          <option>FB 亚太产地证</option><option>FP 中巴FTA产地证</option>
+          <option>FR 中秘FTA产地证</option><option>FN 中新西兰FTA产地证</option>
+          <option>FS 中瑞FTA产地证</option><option>FA 普惠制产地证</option>
+          <option>FH 海峡两岸产地证</option><option>未再加工证明</option>
+          <option>SASO 沙特符合性证明</option><option>CCVO 尼日利亚联合证书</option>
+          <option>CFS 自由销售证书</option><option>贸促会发票证明书</option>
+          <option>阿尔及利亚自由贸易证书</option><option>海牙认证 Apostille</option>
+          <option>埃及使馆认证</option><option>阿曼大使馆认证</option>
+          <option>CE认证</option><option>ROHS认证</option><option>FCC认证</option>
+          <option>UKCA认证</option><option>PSE认证</option><option>UL认证</option>
+          <option>CB认证</option><option>DGM危险品鉴定报告</option>
+          <option>出口许可证代办</option><option>二手车出口单证全套</option>
+          <option>其他（备注说明）</option>
+        </select>
+      </div>
+      <div class="frow">
+        <div class="fgrp"><label>姓名 *</label><input type="text" placeholder="您的姓名" id="qName"></div>
+        <div class="fgrp"><label>手机/微信 *</label><input type="tel" placeholder="13424240034" id="qTel"></div>
+      </div>
+      <div class="frow">
+        <div class="fgrp"><label>货物品名</label><input type="text" placeholder="如：电子产品" id="qGoods"></div>
+        <div class="fgrp"><label>目的国</label><input type="text" placeholder="如：韩国" id="qDest"></div>
+      </div>
+      <div class="fgrp"><label>备注</label><textarea rows="2" style="resize:vertical" placeholder="份数/信用证要求/急单..." id="qNote"></textarea></div>
+      <button class="fsub" onclick="submitQ()">🚀 提交下单，获取报价</button>
+      <div class="fnote">提交后陈闯将在30分钟内联系您 · 也可直接微信：13424240034</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<div class="foot">
+  <div class="foot-in">
+    <div class="fb"><h4>陈闯单证服务</h4><p>专注货代单证代办10年，产地证、商事证明书、领事认证、产品认证、危险品申报全品类覆盖，出证快、价格透明、微信全程跟进。</p></div>
+    <div class="fb"><h4>核心服务</h4><ul><li>原产地证 CO/FE/FK/FF/AU/RCEP等14种</li><li>商事证明书 SASO/CCVO/CFS等</li><li>领事认证 埃及/阿曼等</li><li>海牙认证 Apostille</li><li>产品认证 CE/ROHS/FCC/UKCA/PSE</li><li>DGM危险品报告·出口许可证</li></ul></div>
+    <div class="fb"><h4>联系方式</h4><ul><li>📞 13424240034（陈闯）</li><li>💬 微信：13424240034</li><li>⏰ 7×24小时在线</li><li>📦 顺丰快递全国</li></ul></div>
+    <div class="fb"><h4>快速通道</h4><ul><li>下载填写模板</li><li>产地证真伪查询</li><li>HS编码查询工具</li><li>常见问题解答</li><li>急单微信优先处理</li></ul></div>
+  </div>
+  <div class="foot-copy">© 2025 陈闯单证服务 · 专业产地证代办 · 联系电话：13424240034</div>
+</div>
+
+<script>
+// ─── DATA ───
+const D={
+  co:{flag:'🌐',code:'CO',title:'一般原产地证',sub:'Certificate of Origin · 贸促会/海关出具 · 全球通用',time:'1个工作日',issuer:'贸促会/海关',when:'您的买家所在国要求证明货物来自中国，或信用证/合同中注明需要产地证时。这是出口贸易中最基础、使用量最大的单证，几乎所有出口商都会用到。不确定需要什么产地证，先办CO是最稳妥的选择。',desc:'一般原产地证（Certificate of Origin）由中国贸促会CCPIT或各地海关出具，证明该批货物的原产地为中华人民共和国。进口国海关凭此享受最惠国（MFN）关税税率。注意：如果目的国与中国有FTA协议，建议优先考虑对应FTA产地证，可享受更低的优惠关税。',docs:['商业发票 Invoice（含品名/数量/金额）','装箱单 Packing List','出口报关单（已报关货物）','信用证或合同（如有特殊要求）','授权委托书（首次代办需要）']},
+  fe:{flag:'🌏',code:'FE',title:'东盟原产地证 Form E',sub:'ASEAN-China FTA · 东南亚10国专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口到越南、泰国、马来西亚、印度尼西亚、菲律宾、新加坡、缅甸、柬埔寨、老挝、文莱，且买家希望享受零关税或优惠关税时。不办FE，货物只能按普通MFN税率缴税，可能给客户增加5%-15%甚至更高的关税成本。',desc:'Form E是中国-东盟自贸区优惠原产地证，简称FE或东盟证。自中国-东盟FTA全面实施后，绝大多数商品进入东盟10国已实现零关税或大幅降税。东盟是中国最大贸易伙伴，FE是使用频率极高的证书之一。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','目的地为东盟成员国的证明（提单/合同）','首次需授权委托书']},
+  fk:{flag:'🇰🇷',code:'FK',title:'中韩FTA产地证',sub:'China-Korea FTA Form K · 韩国专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口韩国，且买家希望享受中韩FTA优惠关税。如果不办FK，韩国买家需按普通关税率缴税，可能影响您的价格竞争力。',desc:'中韩自贸协定（CKFTA）于2015年12月正式生效，FK证书（Form K）是该协定下的原产地证。凭此证进入韩国的货物，大量品类已降至零关税。韩国是中国重要出口市场，出口韩国的贸易商应积极使用FK证书帮客户降低关税成本。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','中韩合同或采购单','首次需授权委托书']},
+  ff:{flag:'🇨🇱',code:'FF',title:'中智FTA产地证',sub:'China-Chile FTA Form FF · 智利专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口智利，买家希望享受零关税或优惠关税时。中智FTA是中国在拉美的第一个FTA（2006年生效），超过97%商品类别已零关税，不办FF客户需缴正常关税，竞争力大幅下降。',desc:'中国-智利自贸协定FF产地证（Form FF）是目前覆盖面极广的优惠协定产地证，几乎所有工业品进入智利已实现零关税。出口智利的贸易商只要货物符合原产地标准，均应办理FF证书为客户节省关税。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','中智合同或采购单','首次需授权委托书']},
+  au:{flag:'🇦🇺',code:'AU',title:'中澳FTA产地证（CHAFTA）',sub:'China-Australia FTA · 澳大利亚专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口澳大利亚，且需帮助澳洲买家享受零关税或优惠关税。绝大多数工业产品进入澳大利亚已实现零关税，帮客户省去进口成本，提升竞争力。',desc:'中澳自贸协定（ChAFTA）于2015年12月生效。绝大多数工业产品进入澳大利亚已实现零关税，部分农产品也大幅降税。凭CHAFTA产地证进入澳大利亚，买家可大幅降低进口成本。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  rcep:{flag:'🌏',code:'RCEP',title:'RCEP产地证',sub:'区域全面经济伙伴关系 · 15国适用',time:'1个工作日',issuer:'海关/贸促会',when:'出口日本、韩国、澳大利亚、新西兰及东盟10国共15个成员国之一时均可考虑使用。特别是出口日本——中日此前无FTA，RCEP生效后出口日本可首次享受优惠关税，是重大新机遇。',desc:'RCEP（区域全面经济伙伴关系协定）是全球规模最大的自贸协定，2022年1月1日生效，涵盖15个成员国。同一目的国可能同时适用RCEP和原有FTA（如中韩有FK和RCEP），建议对比两个协定对该HS编码的税率，选取最低的一个使用。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  fb:{flag:'🌏',code:'FB',title:'亚太贸易协定产地证',sub:'APTA · 印度/韩国/孟加拉/斯里兰卡/老挝',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口印度、孟加拉国、斯里兰卡或老挝，且需要享受亚太贸易协定优惠关税时。特别是出口印度，FB证书的关税优惠比CO更有吸引力，出口印度的贸易商应积极了解。',desc:'亚太贸易协定（APTA）原称曼谷协定，成员国有中国、印度、韩国、孟加拉国、斯里兰卡、老挝。Form B是该协定下的原产地证书。出口印度时，FB可享受比CO更优惠的关税，纺织品、化工品行业尤为实用。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  fp:{flag:'🇵🇰',code:'FP',title:'中巴FTA产地证',sub:'China-Pakistan FTA · 巴基斯坦专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口巴基斯坦，买家希望享受零关税或低关税优惠时。中巴FTA分两个阶段降税，目前大多数商品享有优惠关税，是出口巴基斯坦必备单证。',desc:'中国-巴基斯坦自贸协定（CPFTA）第二阶段于2019年全面降税，大量商品进入巴基斯坦已实现零关税或大幅优惠。巴基斯坦是中国"一带一路"重点合作国家，出口量大，FP证书需求日益增长。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  fr:{flag:'🇵🇪',code:'FR',title:'中秘FTA产地证',sub:'China-Peru FTA Form FR · 秘鲁专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口秘鲁，需帮买家享受优惠关税时。中秘FTA 2010年生效，不办FR证书，货物按普通关税缴税，影响价格竞争力。',desc:'中国-秘鲁自贸协定于2010年3月生效，Form FR是该协定原产地证书。秘鲁是南美重要市场，凭FR证书进口的中国商品享受关税优惠，大量商品已降至零关税。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  fn:{flag:'🇳🇿',code:'FN',title:'中新西兰FTA产地证',sub:'China-New Zealand FTA · 新西兰专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口新西兰，买家希望享受FTA优惠关税时。现也可用RCEP，建议比较该HS编码在两个协定下的税率后选更低的那个。',desc:'中国-新西兰自贸协定（CNZFTA）2008年生效，是中国与发达国家签订的首个FTA。目前RCEP也涵盖新西兰，出口商可根据具体品类税率，选择FN或RCEP中更优惠的证书。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  fs:{flag:'🇨🇭',code:'FS',title:'中瑞FTA产地证',sub:'China-Switzerland FTA · 瑞士专用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口瑞士，买家希望享受优惠关税时。中瑞FTA是中国与欧洲大陆国家签订的首个FTA，化工品、机械、手表配件等行业出口瑞士尤为重要。',desc:'中国-瑞士自贸协定（CSFTA）2014年7月生效，是中国与欧洲大陆国家签订的首个FTA。大量工业品进入瑞士享受零关税或大幅降税。瑞士市场消费力强，FS证书可帮出口商提升竞争力。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  fa:{flag:'📄',code:'FA',title:'普惠制产地证 Form A',sub:'GSP Certificate of Origin · 挪威等适用',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口到目前仍向中国给予GSP待遇的国家（目前主要为挪威）时。如买家在挪威，可咨询该品类是否在GSP范围内，享受单方面关税优惠。',desc:'普惠制（GSP）是发达国家单方面给予发展中国家的关税优惠制度，Form A是GSP项下的原产地证书。历史上欧盟、美国、日本等均曾给予中国GSP，但大多数已取消，目前仍对中国部分产品保留GSP的国家已较少，办理前需确认目的国和具体品类是否有效。',docs:['商业发票 Invoice','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  fh:{flag:'🏝️',code:'FH',title:'海峡两岸ECFA产地证',sub:'ECFA早期收获 · 台湾地区',time:'1个工作日',issuer:'海关/贸促会',when:'您的货物出口台湾地区，且商品在ECFA早期收获清单内，可凭FH证书享受降税甚至零关税待遇。建议先查询该品类HS编码是否在早收清单内。',desc:'两岸经济合作框架协议（ECFA）2010年签署，早期收获计划针对特定商品给予关税优惠。FH证书内容有严格格式要求，不得出现敏感字样，需严格按规定填写，办理前请务必告知我们目的地是台湾。',docs:['商业发票 Invoice（格式须符合要求）','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  unmanuf:{flag:'🔖',code:'未再加工',title:'未再加工证明',sub:'Non-Manipulation Certificate · 中转贸易专用',time:'2个工作日',issuer:'贸促会CCPIT',when:'您的货物经香港或其他第三地中转，进口国要求证明货物在中转地没有经过任何实质性加工、仍保持中国原产地状态时。常见于走香港中转的货物。',desc:'未再加工证明由贸促会或相关机构出具，证明货物在中转地（如香港）仅进行了仓储、换箱、分拣等非加工性操作，原产地仍为中国大陆。许多进口国为防止货物借道中转规避原产地规定，要求出口商提供此证明。',docs:['商业发票 Invoice','装箱单 Packing List','中转地提单或仓单','说明中转情况的声明文件','首次需授权委托书']},
+  saso:{flag:'🇸🇦',code:'SASO',title:'沙特符合性证明',sub:'Saudi Arabian Standards Organization · 出口沙特必备',time:'3-7个工作日',issuer:'授权认证机构+贸促会',when:'凡是列入SASO管控范围的产品（电器、建材、化工品、汽车配件等），出口沙特阿拉伯之前必须取得SASO证书。否则货物到港后直接被拒绝入境或销毁。出口前务必确认您的品类是否受控，建议提前2-3周开始办理。',desc:'SASO是沙特阿拉伯标准化组织（Saudi Arabian Standards Organization）的缩写。受控产品出口沙特需取得两类证书：①产品合格证（PCoC，针对产品本身）；②装运证（SC，针对每批货物）。两证缺一不可，通常需要配合第三方检测机构出具符合SASO技术标准的测试报告。',docs:['产品技术规格说明书','第三方测试报告（符合SASO标准）','商业发票 Invoice','装箱单 Packing List','产品照片（多角度）','授权委托书']},
+  ccvo:{flag:'🇳🇬',code:'CCVO',title:'尼日利亚联合证书',sub:'Combined Certificate of Value & Origin · 尼日利亚必备',time:'2个工作日',issuer:'贸促会CCPIT',when:'您的货物出口尼日利亚，无论任何品类都必须随附CCVO证书。这是尼日利亚海关的强制要求，没有CCVO，货物不能在尼日利亚清关放行。',desc:'CCVO全称Combined Certificate of Value and Origin，由中国贸促会（CCPIT）在商业发票上加盖认证章，同时证明货物的价值真实性和原产地。办理时需提供真实的商业发票，不得虚开价格，否则将影响认证的合法性。',docs:['商业发票 Invoice（正本，价格须真实）','装箱单 Packing List','出口报关单','首次需授权委托书']},
+  cfs:{flag:'📜',code:'CFS',title:'自由销售证书',sub:'Certificate of Free Sale · 多国适用',time:'3-5个工作日',issuer:'贸促会/商协会',when:'您出口食品、化妆品、医疗器械、保健品、婴儿用品等监管类产品，进口方要求证明这些产品在中国市场已合法上市销售时。常见目的地：中东、东南亚、非洲、南美等。',desc:'自由销售证书（CFS）证明该产品已获得中国相关主管部门的合法上市许可，可在中国境内自由销售。进口国（特别是中东、非洲、东南亚国家）要求此类证明，以确认进口商品符合其食品安全、产品安全等监管要求。由贸促会、商务部或相关行业协会根据产品类型出具。',docs:['产品注册证或备案证明（如有）','企业营业执照（英文版）','商业发票 Invoice','产品说明书（中英双语）','产品成分/配方（食品/化妆品）','首次需授权委托书']},
+  invoice:{flag:'🧾',code:'发票认证',title:'贸促会发票证明书',sub:'CCPIT Invoice Certification · 中东/非洲常用',time:'1个工作日',issuer:'贸促会CCPIT',when:'您的信用证（L/C）或合同中注明"发票须经中国贸促会认证"，或买家要求提供贸促会认证发票时。常见于中东、非洲、南美客户，他们用此核实发票真实性。',desc:'贸促会发票证明书是由中国国际贸易促进委员会（CCPIT）对出口商的商业发票加盖认证章，证明发票的真实性和合法性，并确认企业身份。认证后的发票在中东、非洲、南美等地具有更高的法律效力，是很多信用证的硬性要求。',docs:['商业发票 Invoice（英文版正本）','装箱单 Packing List（如需一同认证）','首次需授权委托书']},
+  algeria:{flag:'🇩🇿',code:'阿尔及利亚',title:'阿尔及利亚自由贸易证书',sub:'Algeria · 特定品类进口要求',time:'3个工作日',issuer:'贸促会CCPIT',when:'您出口食品、化妆品、医疗器械、化工品等受控产品到阿尔及利亚，进口商要求提供在原产国可自由销售的证明时。这是阿尔及利亚海关对特定品类的进口要求。',desc:'阿尔及利亚自由贸易证书由贸促会（CCPIT）或相关商会出具，证明该产品在中国可以合法自由销售，符合中国相关法规要求。阿尔及利亚是非洲重要进口市场，部分情况下还需配合领事认证或公证手续，办理前请咨询具体要求。',docs:['产品资质证明（注册证/备案证）','企业营业执照（英文版）','商业发票 Invoice','产品说明书','授权委托书']},
+  apostille:{flag:'⚖️',code:'Apostille',title:'海牙认证',sub:'《海牙公约》附加证明书 · 120+国家互认',time:'5-10个工作日',issuer:'中国司法部/外交部',when:'您的商业合同、授权书、公证文书、学历证书等文件需要在《海牙公约》成员国（120+国家）中使用，且该国不要求使馆认证时，可申请海牙认证，比传统使馆认证流程快、成本低。',desc:'海牙认证（Apostille）依据1961年《取消外国公文书认证要求的公约》颁发，全球120多个国家和地区互相承认。凡两国均为公约成员国，文件只需海牙认证即可使用，无需走使馆认证流程。常见场景：出口授权书、商业合同公证、企业资质文件跨国使用等。',docs:['需认证的文件正本（公证书或其他公文）','如是商业文件，可能先需贸促会认证','授权委托书','申请人身份证明']},
+  egypt:{flag:'🇪🇬',code:'埃及',title:'埃及使馆认证',sub:'Egypt Embassy Legalization · 埃及必备',time:'5-7个工作日',issuer:'埃及驻华大使馆',when:'您的货物出口埃及，埃及买家要求发票、箱单、产地证、合同等商业文件经埃及使馆认证时。埃及是非洲重要市场，使馆认证是清关的必要条件，缺少则无法通关。',desc:'埃及驻华大使馆对商业文件认证，是在文件上加盖埃及大使馆认证章，证明文件的真实合法性。通常流程为：原始商业文件→贸促会认证→埃及使馆认证。有些情况还需公证处公证。办理周期较长，建议提前安排。',docs:['商业文件正本（发票/产地证/箱单等）','贸促会认证版本（部分文件需先认证）','授权委托书','企业营业执照复印件（加盖公章）']},
+  oman:{flag:'🇴🇲',code:'阿曼',title:'阿曼大使馆认证',sub:'Oman Embassy Legalization · 阿曼必备',time:'5-7个工作日',issuer:'阿曼驻华大使馆',when:'您的货物出口阿曼，阿曼买家要求商业文件经阿曼大使馆认证时。阿曼海关要求部分文件须经大使馆认证方可用于清关，缺少将导致货物被扣押或退运。',desc:'阿曼驻华大使馆对出口的商业文件（发票、箱单、产地证、合同、授权书等）进行认证，证明文件真实合法，可在阿曼境内使用。通常流程：原始文件→贸促会认证→阿曼使馆认证。',docs:['商业文件正本（发票/箱单/产地证等）','贸促会认证版本（需先做）','授权委托书','企业营业执照复印件']},
+  ce:{flag:'🇪🇺',code:'CE',title:'CE认证',sub:'欧盟合格标志 · 出口欧洲强制要求',time:'15-30个工作日',issuer:'欧盟认可公告机构',when:'您的产品要进入欧盟27国及挪威、冰岛、列支敦士登市场销售。电子电器、机械、玩具、建材、医疗器械等绝大多数产品均有此要求，没有CE标志不得在欧洲市场上市，海关也会拦截。',desc:'CE（Conformité Européenne）是欧盟强制安全认证标志，代表产品符合欧盟相关指令的安全、健康、环保要求。常见相关指令：低电压指令LVD、电磁兼容指令EMC、无线电设备指令RED、机械指令MD等。根据产品类型，CE可通过自我声明或委托第三方公告机构认证完成，高风险产品必须走第三方认证。',docs:['产品样品（用于测试）','产品技术规格文件','电路图/原理图（电子产品）','用户手册（英文或目的国语言）','企业资质文件']},
+  rohs:{flag:'🇪🇺',code:'RoHS',title:'ROHS认证',sub:'有害物质限制指令 · 欧盟电子产品必备',time:'10-20个工作日',issuer:'SGS/BV/ITS等第三方机构',when:'您的电子电器产品、电路板、线缆、连接器等出口欧盟，必须符合ROHS指令，证明产品中铅、汞、镉等有害物质含量不超标。通常与CE认证同步进行，是CE认证的重要组成部分。',desc:'RoHS（Restriction of Hazardous Substances）是欧盟《有害物质限制指令》（指令2011/65/EU，RoHS 2.0）。限制电子电气设备中10种有害物质的使用。ROHS认证通常由SGS、BV、ITS等第三方检测机构对材料和成品进行检测，出具检测报告后可作为CE符合性声明的依据。',docs:['产品样品','BOM物料清单（材料成分）','材料检测报告（如已有）','供应商材料声明']},
+  fcc:{flag:'🇺🇸',code:'FCC',title:'FCC认证',sub:'美国联邦通信委员会 · 含无线功能产品必备',time:'15-25个工作日',issuer:'FCC授权测试实验室',when:'您的产品含有蓝牙、WiFi、蜂窝网络、ZigBee、射频模块等无线通信功能，出口美国时必须取得FCC认证。手机、平板、蓝牙耳机、智能音箱、路由器、无线充电器、遥控器等均适用。',desc:'FCC（Federal Communications Commission）是美国联邦通信委员会对无线和电子设备的强制认证。含无线发射功能的产品需申请FCC ID，认证通过后在FCC数据库可查，产品上必须标注FCC ID号。这是进入美国市场的法定要求，海关会核查。',docs:['产品样品（3-5台）','产品技术规格','电路图和PCB布局图','用户手册','已有的测试报告（如有）']},
+  ukca:{flag:'🇬🇧',code:'UKCA',title:'UKCA认证',sub:'英国合格认证 · 脱欧后替代CE · 英国必备',time:'15-30个工作日',issuer:'UKAS认可机构（英国）',when:'您的产品要进入英国市场销售。英国脱欧后CE认证已不再被英国接受（过渡期已结束），必须单独申请UKCA认证，否则无法在英国合法销售。',desc:'UKCA（UK Conformity Assessed）是英国脱欧后推出的产品合格认证标志，自2023年1月起正式强制执行。UKCA的技术要求与CE高度相似，但认证机构必须是英国政府认可的UKAS机构，不能使用欧盟公告机构的报告。已有CE认证的企业通常可以较快转换为UKCA。',docs:['产品样品','CE认证文件（如已有，可加速转换）','产品技术规格文件','用户手册']},
+  pse:{flag:'🇯🇵',code:'PSE',title:'PSE认证',sub:'日本电气用品安全法 · 出口日本电气产品必备',time:'20-40个工作日',issuer:'METI认可检查机构',when:'您的电气产品出口日本，必须符合《电气用品安全法》要求。充电器、电源适配器、电线、开关电源、电动工具、移动电源等均在受控范围内，缺少PSE认证货物将被日本海关扣押。',desc:'PSE认证基于日本《电气用品安全法》（DENAN Law），分两类：菱形PSE（116类高危险产品，须第三方认证）和圆形PSE（341类一般产品，可自我申报）。两类产品都必须在产品上标注PSE标志，且须由在日本登记的事业者名义进行销售。',docs:['产品样品','技术规格文件','电路图','用户手册（日文版）','日本事业者资质（如无可协助申请）']},
+  ul:{flag:'🇺🇸',code:'UL',title:'UL认证',sub:'美国保险商实验室 · 电气安全权威认证',time:'20-45个工作日',issuer:'UL Solutions等',when:'您的电气产品（插头、电源线、开关电源、充电器、灯具、家电等）要进入美国市场。虽然UL非强制，但亚马逊、沃尔玛、Target等主要零售商和采购商通常要求供应商持有UL认证，否则拒绝采购。',desc:'UL（Underwriters Laboratories）是美国最具权威的第三方安全认证机构之一，历史超过百年。UL认证代表产品经过严格安全测试，符合北美安全标准。获得UL认证的产品可在产品上使用UL标志，大幅提升在美国市场的竞争力和消费者信任度。',docs:['产品样品','产品技术规格','电路图','用户手册','已有测试报告（如有）']},
+  cb:{flag:'🌐',code:'CB',title:'CB认证',sub:'IEC国际互认体系 · 一证换取多国认证',time:'20-40个工作日',issuer:'IECEE成员认证机构',when:'您的产品需要同时进入多个国家市场，希望减少重复认证费用和时间。一张CB报告可在50+成员国（欧盟、美国、日本、韩国、澳大利亚等）转换为当地认证，是多国认证的高效起点。',desc:'CB是国际电工委员会电工产品安全认证组织（IECEE）的相互认可体系，50多个国家和地区的认证机构相互承认CB测试报告和证书，企业凭CB证书可快速申请各国本地认证，大幅缩短认证周期和降低成本。CB主要针对电气电子产品，测试基于IEC国际标准。',docs:['产品样品','技术规格文件','电路图','用户手册']},
+  dgm:{flag:'⚠️',code:'DGM',title:'危险品申报/鉴定报告',sub:'危险品货物运输必备 · 航空IATA · 海运IMDG',time:'3-5个工作日',issuer:'具资质的第三方鉴定机构',when:'您的货物含有锂电池（含锂充电设备、移动电源）、易燃液体（香水、酒精、油漆）、腐蚀性物品、磁性物品、粉末类、压力容器、化学品等，在航空或海运运输前必须先完成危险品鉴定，否则航空公司/船公司拒绝接货。不确定是否属于危险品，也建议先做鉴定。',desc:'危险品（DG/Dangerous Goods）运输受到严格管制：航空按IATA《危险品规则》（DGR）管理；海运按IMO《国际海运危险货物规则》（IMDG Code）管理。常见危险品：锂电池（第9类）、易燃液体（第3类）、腐蚀品（第8类）等。鉴定报告由具有资质的第三方机构出具，说明货物是否属于危险品、如何包装标识申报。航空危险品还需附MSDS和Shippers Declaration。',docs:['货物品名和化学成分（MSDS/SDS）','产品说明书','锂电池规格参数（含电池货物）','样品或详细图片']},
+  exportlicense:{flag:'📃',code:'出口许可',title:'出口许可证代办',sub:'商务部出口许可 · 二手车/管制品必备',time:'5-15个工作日',issuer:'商务部/地方商务局',when:'您的出口货物属于以下类型之一：①二手汽车出口（必须持有商务部颁发的出口许可证才能报关）；②两用物项（军民两用物资）；③其他受出口管制的货物。缺少出口许可证，海关不予放行，提前申请避免误船。',desc:'出口许可证由商务部（或授权机构）颁发，是对特定商品出口实施管理的行政许可文件。二手汽车出口是近年来需求量增长最快的品类，出口商必须先向商务部申请二手车出口资质，然后逐票申请出口许可证，方可报关出口。建议提前30-60天开始准备。',docs:['企业营业执照和资质证明','货物合同/采购单','车辆：车辆登记证/行驶证、合格证','两用物项：技术参数、最终用户声明','出口目的国进口许可（如有要求）']},
+  usedcar:{flag:'🚗',code:'车辆出口',title:'二手车出口单证全套',sub:'出口许可证+检测报告+自我声明+CO产地证',time:'5-10个工作日',issuer:'商务部+检测机构+贸促会',when:'车商或货代需要将二手汽车出口至非洲、中东、东南亚、中亚等市场，需要办理完整的出口单证套件。一站式代办全套文件，协助顺利完成报关和出口清关。',desc:'二手车出口完整单证包括：①出口许可证（商务部，必须）②车辆检测报告（由有资质的检测机构出具，证明车辆状况）③研车鉴定自我声明（出口商声明车辆信息真实）④CO一般产地证（证明中国原产地）⑤商业发票和装箱单⑥目的国如有要求的其他认证文件。我们提供一站式服务，协助车商和货代高效完成全套单证。',docs:['车辆行驶证/登记证','车辆合格证（CCC证书）','购车发票或过户证明','车辆VIN码照片（车身+铭牌）','车辆外观多角度照片','出口商营业执照']}
+};
+
+// ─── NAVIGATION ───
+function showDetail(id){
+  const d=D[id]; if(!d)return;
+  document.getElementById('dFlag').textContent=d.flag;
+  document.getElementById('dCode').textContent=d.code;
+  document.getElementById('dTitle').textContent=d.title;
+  document.getElementById('dSub').textContent=d.sub;
+  document.getElementById('dWhen').textContent=d.when;
+  document.getElementById('dDesc').textContent=d.desc;
+  document.getElementById('dTime').textContent=d.time;
+  document.getElementById('dIssuer').textContent=d.issuer;
+  document.getElementById('dSampleLabel').textContent=d.title+' 成品样本';
+  const docs=document.getElementById('dDocs');
+  docs.innerHTML=d.docs.map(x=>`<div class="det-doc"><span class="det-doc-icon">📌</span><span class="det-doc-name">${x}</span></div>`).join('');
+  document.getElementById('ocName').value='';
+  document.getElementById('ocTel').value='';
+  document.getElementById('ocGoods').value='';
+  document.getElementById('ocNote').value='';
+  document.getElementById('gridView').classList.add('hide');
+  document.getElementById('detailView').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.title=d.title+' | 陈闯单证服务';
+}
+
+function goBack(){
+  document.getElementById('gridView').classList.remove('hide');
+  document.getElementById('detailView').classList.remove('show');
+  document.title='陈闯单证服务 | CO产地证·SASO·FTA·CE认证专业代办';
+}
+
+// ─── FILTER ───
+function filterCat(type,el){
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  if(document.getElementById('detailView').classList.contains('show')) goBack();
+  const cards=document.querySelectorAll('.cert-card');
+  const regions=['asia','mideast','latam','pacific','africa','europe'];
+  let vis=0;
+  cards.forEach(c=>{
+    let show=false;
+    if(type==='all') show=true;
+    else if(regions.includes(type)) show=(c.dataset.region===type||c.dataset.region==='all');
+    else show=c.dataset.type===type;
+    c.style.display=show?'':'none';
+    if(show)vis++;
+  });
+  document.getElementById('gridTitle').textContent=el.textContent.trim().replace(/\d+/,'')+`（${vis}种）`;
+  document.getElementById('gridSub').textContent='点击任意单证查看详情和下单';
+}
+
+// ─── SEARCH ───
+function doSearch(q){
+  q=q.trim().toLowerCase();
+  if(document.getElementById('detailView').classList.contains('show')) goBack();
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelector('.cat-tab').classList.add('on');
+  const cards=document.querySelectorAll('.cert-card');
+  let vis=0;
+  cards.forEach(c=>{
+    const show=!q||c.textContent.toLowerCase().includes(q);
+    c.style.display=show?'':'none';
+    if(show)vis++;
+  });
+  document.getElementById('gridTitle').textContent=q?`"${q}" 搜索结果（${vis}种）`:`全部单证（${vis}种）`;
+}
+
+// ─── ORDER ───
+function submitDet(){
+  const n=document.getElementById('ocName').value.trim();
+  const t=document.getElementById('ocTel').value.trim();
+  if(!n||!t){alert('请填写姓名和联系方式');return;}
+  alert(`✅ 下单成功！\n\n陈闯将在30分钟内通过电话/微信联系您。\n\n也可直接微信：13424240034`);
+}
+
+function openQ(type){
+  if(type){
+    const s=document.getElementById('qSelect');
+    for(let o of s.options){if(o.value===type||o.text.startsWith(type.split(' ')[0])){s.value=o.value;break;}}
+    document.getElementById('qType').textContent='📋 '+type;
+  }else{
+    document.getElementById('qType').textContent='🌐 请选择单证类型';
+  }
+  document.getElementById('qov').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeQ(){document.getElementById('qov').classList.remove('show');document.body.style.overflow='';}
+function closeQOv(e){if(e.target===document.getElementById('qov'))closeQ();}
+function submitQ(){
+  const n=document.getElementById('qName').value.trim();
+  const t=document.getElementById('qTel').value.trim();
+  if(!n||!t){alert('请填写姓名和联系方式');return;}
+  alert(`✅ 下单成功！\n\n陈闯将在30分钟内通过电话/微信联系您。\n\n也可直接微信：13424240034`);
+  closeQ();
+}
+
+function dlFile(name){alert(`📥 正在准备「${name}」...\n\n（正式上线后将链接到真实模板文件，如需立即获取请微信：13424240034）`);}
+</script>
+</body>
+</html>
